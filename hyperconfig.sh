@@ -8,6 +8,8 @@ usuario=$1
 if [ $# -eq 0 ]; then
     echo -e "${cor_vermelha}ERRO:${reset} usuário não informado"
     exit 1
+else
+    usuario=$1
 fi
 
 if [ "$EUID" -ne 0 ]; then
