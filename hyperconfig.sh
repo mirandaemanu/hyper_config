@@ -3,6 +3,12 @@
 cor_vermelha='\033[0;31m'
 cor_verde='\033[0;32m'
 reset='\033[0m'
+usuario=$1
+
+if [ $# -eq 0 ]; then
+    echo "${cor_vermelha}ERRO:${reset} usuário não informado"
+    exit 1
+fi
 
 if [ "$EUID" -ne 0 ]; then
     echo -e "${cor_vermelha}ERRO: Este script precisa ser executado como root. Por favor, execute-o com sudo.${reset}"
