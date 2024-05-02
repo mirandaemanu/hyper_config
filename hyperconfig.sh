@@ -14,6 +14,13 @@ fi
 
 echo -e "Script desenvolvido por Emanuel Cascais\n"
 
+check_user() {
+    if [ ! ls -l /mnt/c/Users | grep $usuario ] {
+        echo -e "O usuário informado não existe. \nPor favor, execute o script novamente e informe o usuário do seu computador."
+        exit 1
+    }
+}
+
 bashrc_config() {
     bashrc_content=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/bashrc_content);
     mv ~/.bashrc{,-backup};
