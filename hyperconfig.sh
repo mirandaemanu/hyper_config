@@ -4,6 +4,11 @@ cor_vermelha='\033[0;31m'
 cor_verde='\033[0;32m'
 reset='\033[0m'
 
+if [ "$EUID" -ne 0 ]; then
+    echo "${cor_vermelha}ERRO: Este script precisa ser executado como root. Por favor, execute-o com sudo.${reset}"
+    exit 1
+fi
+
 echo -e "Script desenvolvido por Emanuel Cascais\n"
 
 bashrc_config() {
