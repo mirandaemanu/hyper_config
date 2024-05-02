@@ -6,7 +6,7 @@ reset='\033[0m'
 usuario=$1
 
 if [ $# -eq 0 ]; then
-    echo "${cor_vermelha}ERRO:${reset} usuário não informado"
+    echo -e "${cor_vermelha}ERRO:${reset} usuário não informado"
     exit 1
 fi
 
