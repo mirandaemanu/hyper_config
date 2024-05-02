@@ -15,10 +15,10 @@ fi
 echo -e "Script desenvolvido por Emanuel Cascais\n"
 
 check_user() {
-    if [ ! ls -l /mnt/c/Users | grep $usuario ] {
+    if [ ! ls -l /mnt/c/Users | grep $usuario ]; then
         echo -e "O usuário informado não existe. \nPor favor, execute o script novamente e informe o usuário do seu computador."
         exit 1
-    }
+    fi
 }
 
 bashrc_config() {
