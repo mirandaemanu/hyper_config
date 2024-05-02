@@ -23,14 +23,14 @@ bashrc_config() {
     bashrc_content=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/bashrc_content);
     mv ~/.bashrc{,-backup};
     echo "$bashrc_content" > ~/.bashrc
-    sed -i "s#usuario#$USER#g" ~/.bashrc
+    sed -i "s#usuario#$usuario#g" ~/.bashrc
     echo -e "Arquivo .bashrc configurado: ${cor_verde}OK${reset}";
 }
 
 ssh_keys_config() {
-    if [ -d /mnt/c/Users/$USER/.ssh/ ]; then
+    if [ -d /mnt/c/Users/$usuario/.ssh/ ]; then
         mkdir ~/.ssh 2> /dev/null
-        rsync -avz /mnt/c/Users/$USER/.ssh/id* ~/.ssh > /dev/null
+        rsync -avz /mnt/c/Users/$usuario/.ssh/id* ~/.ssh > /dev/null
         chmod 600 ~/.ssh/*
         echo -e "Chave SSH configurada: ${cor_verde}OK${reset}"
     else
