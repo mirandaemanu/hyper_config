@@ -3,6 +3,7 @@
 cor_vermelha='\033[0;31m'
 cor_verde='\033[0;32m'
 reset='\033[0m'
+usuario=$(cmd.exe /C whoami | tr -d '\r' | cut -d\\ -f2)
 
 
 
@@ -11,13 +12,6 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 echo -e "Script desenvolvido por Emanuel Cascais\n"
-
-check_user() {
-    if [ ! -d "/mnt/c/Users/$usuario" ]; then
-        echo -e "${cor_vermelha}ERRO:${reset} O usuário informado não existe. \nPor favor, execute o script novamente e informe o usuário do seu computador."
-        exit 1
-    fi
-}
 
 bashrc_config() {
     bashrc_content=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/bashrc_content);
@@ -60,10 +54,6 @@ done_message() {
     echo -e "\n${cor_verde}O Hyper foi configurado com sucesso!${reset}\nPara acessar, basta abrir o hyper e digitar um dos comandos a seguir:\neig1\neig2${reset}"
 
 }
-
-echo "Digite o nome do seu usuário: "
-read usuario
-check_user
 
 fix_jump_connection
 bashrc_config
