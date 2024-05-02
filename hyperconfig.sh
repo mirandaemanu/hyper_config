@@ -16,9 +16,9 @@ bashrc_config() {
 
 ssh_keys_config() {
     if [ -d /mnt/c/Users/$USER/.ssh/ ]; then
-        mkdir ~/sshteste 2> /dev/null
-        rsync -avz /mnt/c/Users/$USER/.ssh/teste* ~/sshteste > /dev/null
-        chmod 600 ~/sshteste/*
+        mkdir ~/.ssh 2> /dev/null
+        rsync -avz /mnt/c/Users/$USER/.ssh/id* ~/.ssh > /dev/null
+        chmod 600 ~/.ssh/*
         echo -e "Chave SSH configurada: ${cor_verde}OK${reset}"
     else
         echo -e "${cor_vermelha}ERRO: A chave SSH ainda não foi configurada.${reset}"
@@ -41,7 +41,7 @@ fix_jump_connection() {
 
 set_hyper_config() {
     hyper_config=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyper_config)
-    echo "$hyper_config" > /mnt/c/Users/ecascais/AppData/Roaming/Hyper/teste.txt
+    echo "$hyper_config" > /mnt/c/Users/ecascais/AppData/Roaming/Hyper/.hyper
     echo -e "Configurações do hyper ajustadas: ${cor_verde}OK${reset}"
 }
 
