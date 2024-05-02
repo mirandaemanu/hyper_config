@@ -34,7 +34,7 @@ fix_jump_connection() {
         echo -e "${cor_verde}Conexão bem sucedida ${reset}"
     else
         echo "Digite a senha do seu usuário (OBS: por questões de segurança, a senha não irá aparecer no terminal)"
-        sudo sh -c "sed -i '/# generateHosts = false/a 10.25.73.241   jump1.pro1.eigbox.com/a 10.25.73.242   jump2.pro1.eigbox.com' && chattr +i /etc/hosts"
+        sudo sh -c "sed -i '/# generateHosts = false/a 10.25.73.241   jump1.pro1.eigbox.com/a 10.25.73.242   jump2.pro1.eigbox.com\a 185.199.108.133   raw.githubusercontent.com' && chattr +i /etc/hosts"
         echo -e "${cor_verde}Conexão bem sucedida ${reset}"
     fi
 }
@@ -50,8 +50,8 @@ done_message() {
 
 }
 
+fix_jump_connection
 bashrc_config
 ssh_keys_config
 set_hyper_config
-fix_jump_connection
 done_message
