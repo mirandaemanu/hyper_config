@@ -8,9 +8,9 @@ echo -e "Script desenvolvido por Emanuel Cascais\n"
 
 bashrc_config() {
     bashrc_content=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/bashrc_content);
-    mv ~/teste.txt{,-backup};
-    echo "$bashrc_content" > ~/teste.txt
-    sed -i "s#usuario#$USER#g" ~/teste.txt
+    mv ~/.bashrc{,-backup};
+    echo "$bashrc_content" > ~/.bashrc
+    sed -i "s#usuario#$USER#g" ~/.bashrc
     echo -e "Arquivo .bashrc configurado: ${cor_verde}OK${reset}";
 }
 
