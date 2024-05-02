@@ -37,6 +37,7 @@ fix_jump_connection() {
     echo -e "\nTestando a conexão com o JUMP.."
     if  ! ping -c 4 "$jump" > /dev/null 2>&1  ; then
         sed -i "/# generateHosts = false/a 10.25.73.241   jump1.pro1.eigbox.com\n10.25.73.242   jump2.pro1.eigbox.com\n185.199.108.133   raw.githubusercontent.com" /etc/hosts
+        chattr +i /etc/hosts
     fi
     echo -e "${cor_verde}Conexão bem sucedida ${reset}"
 }
