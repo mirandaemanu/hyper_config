@@ -51,7 +51,7 @@ fix_jump_connection() {
 
 set_hyper_config() {
     hyper_config=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyper_config)
-    echo "$hyper_config" > /mnt/c/Users/ecascais/AppData/Roaming/Hyper/.hyper
+    echo "$hyper_config" > /mnt/c/Users/$usuario/AppData/Roaming/Hyper/.hyper
     echo -e "Configurações do hyper ajustadas: ${cor_verde}OK${reset}"
 }
 
