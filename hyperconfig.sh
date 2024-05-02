@@ -4,18 +4,16 @@ cor_vermelha='\033[0;31m'
 cor_verde='\033[0;32m'
 reset='\033[0m'
 
-echo "Digite o nome do seu usuário: "
-read usuario
+
 
 if [ "$EUID" -ne 0 ]; then
     echo -e "${cor_vermelha}ERRO: Este script precisa ser executado como root. Por favor, execute-o com sudo.${reset}"
     exit 1
 fi
-
 echo -e "Script desenvolvido por Emanuel Cascais\n"
 
 check_user() {
-    if [ ! ls -l /mnt/c/Users | grep $usuario ]; then
+    if [ ! -d /mnt/c/Users/$usuario ]; then
         echo -e "O usuário informado não existe. \nPor favor, execute o script novamente e informe o usuário do seu computador."
         exit 1
     fi
@@ -62,6 +60,10 @@ done_message() {
     echo -e "\n${cor_verde}O Hyper foi configurado com sucesso!${reset}\nPara acessar, basta abrir o hyper e digitar um dos comandos a seguir:\neig1\neig2${reset}"
 
 }
+
+echo "Digite o nome do seu usuário: "
+read usuario
+check_user
 
 fix_jump_connection
 bashrc_config
