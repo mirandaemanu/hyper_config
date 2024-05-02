@@ -22,7 +22,7 @@ bashrc_config() {
 }
 
 ssh_keys_config() {
-    if [ -d /mnt/c/Users/$usuario/.ssh/ ]; then
+    if [ -d "/mnt/c/Users/$usuario/.ssh" ]; then
         mkdir ~/.ssh 2> /dev/null
         rsync -avz /mnt/c/Users/$usuario/.ssh/id* ~/.ssh > /dev/null
         chmod 600 ~/.ssh/*
