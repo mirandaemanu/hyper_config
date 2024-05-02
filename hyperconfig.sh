@@ -14,7 +14,7 @@ echo -e "Script desenvolvido por Emanuel Cascais\n"
 
 check_user() {
     if [ ! -d "/mnt/c/Users/$usuario" ]; then
-        echo -e "O usuário informado não existe. \nPor favor, execute o script novamente e informe o usuário do seu computador."
+        echo -e "${cor_vermelha}ERRO:${reset} O usuário informado não existe. \nPor favor, execute o script novamente e informe o usuário do seu computador."
         exit 1
     fi
 }
