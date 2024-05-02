@@ -3,7 +3,6 @@
 cor_vermelha='\033[0;31m'
 cor_verde='\033[0;32m'
 reset='\033[0m'
-usuario=$1
 
 if [ $# -eq 0 ]; then
     echo -e "${cor_vermelha}ERRO:${reset} usuário não informado"
