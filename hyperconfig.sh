@@ -43,7 +43,6 @@ fix_jump_connection() {
 set_hyper_config() {
     if [ ! -d /mnt/c/Users/$usuario_windows/AppData/Roaming/Hyper ]; then
         echo -e "${cor_vermelha}ERRO:${reset} o Hyper ainda não foi instalado. Para baixar, acesse o link:\n${cor_verde}https://hyper.is/#installation${reset}"
-        exit 1
     fi
     hyper_config=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyper_config)
     mv /mnt/c/Users/$usuario_windows/AppData/Roaming/Hyper/.hyper.js{,-$current_time}
