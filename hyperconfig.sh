@@ -3,7 +3,7 @@
 cor_vermelha='\033[0;31m'
 cor_verde='\033[0;32m'
 reset='\033[0m'
-usuario=$(/mnt/c/Windows/System32/cmd.exe /C whoami | tr -d '\r' | cut -d\\ -f2)
+usuario=$(ls /home)
 current_time=$(date +%s)
 
 
