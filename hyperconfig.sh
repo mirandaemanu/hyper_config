@@ -47,7 +47,7 @@ set_hyper_config() {
     fi
     hyper_config=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyper_config)
     mv /mnt/c/Users/$usuario_windows/AppData/Roaming/Hyper/.hyper.js{,-$current_time}
-    echo "$hyper_config" > /mnt/c/Users/$usuario/AppData/Roaming/Hyper/.hyper.js
+    echo "$hyper_config" > /mnt/c/Users/$usuario_windows/AppData/Roaming/Hyper/.hyper.js
     echo -e "Configurações do hyper ajustadas: ${cor_verde}OK${reset}"
 }
 
