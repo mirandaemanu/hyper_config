@@ -9,7 +9,7 @@ if [ "$EUID" -ne 0 ]; then
     echo -e "${cor_vermelha}ERRO: Este script precisa ser executado como root. Por favor, execute-o com sudo.${reset}"
     exit 1
 fi
-echo -e "\n${cor_verde}Script desenvolvido por Emanuel Cascais\n"
+echo -e "\n${cor_verde}Script desenvolvido por Emanuel Cascais${reset}\n"
 
 bashrc_config() {
     bashrc_content=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/bashrc_content);
