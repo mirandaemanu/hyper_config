@@ -26,10 +26,7 @@ ssh_keys_config() {
         rsync -avz /mnt/c/Users/$usuario_windows/.ssh/id* /home/$usuario/.ssh > /dev/null
         chmod 600 /home/$usuario/.ssh/*
         echo -e "Chave SSH configurada: ${cor_verde}OK${reset}"
-    else
-        echo -e "${cor_vermelha}ERRO: A chave SSH ainda não foi configurada.${reset}"
-        echo "Para corrigir, gere uma nova chave SSH e configure no IPA, conforme a documentação:"
-        exit 1
+    
     fi
 }
 
