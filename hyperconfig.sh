@@ -4,6 +4,7 @@ cor_vermelha='\033[0;31m'
 cor_verde='\033[0;32m'
 reset='\033[0m'
 usuario=$(ls /home)
+usuario_windows=$(/mnt/c/Windows/System32/cmd.exe /C whoami | tr -d '\r' | cut -d\\ -f2)
 current_time=$(date +%s)
 
 
@@ -20,9 +21,9 @@ bashrc_config() {
 }
 
 ssh_keys_config() {
-    if [ -d "/mnt/c/Users/$usuario/.ssh" ]; then
+    if [ -d "/mnt/c/Users/$usuario_windows/.ssh" ]; then
         mkdir /home/$usuario/.ssh 2> /dev/null
-        rsync -avz /mnt/c/Users/$usuario/.ssh/id* /home/$usuario/.ssh > /dev/null
+        rsync -avz /mnt/c/Users/$usuario_windows/.ssh/id* /home/$usuario/.ssh > /dev/null
         chmod 600 /home/$usuario/.ssh/*
         echo -e "Chave SSH configurada: ${cor_verde}OK${reset}"
     else
