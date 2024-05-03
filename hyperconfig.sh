@@ -26,7 +26,6 @@ ssh_keys_config() {
         rsync -avz /mnt/c/Users/$usuario_windows/.ssh/id* /home/$usuario/.ssh > /dev/null
         chmod 600 /home/$usuario/.ssh/*
         echo -e "Chave SSH configurada: ${cor_verde}OK${reset}"
-    
     fi
 }
 
@@ -47,7 +46,7 @@ set_hyper_config() {
         exit 1
     fi
     hyper_config=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyper_config)
-    mv /mnt/c/Users/$usuario/AppData/Roaming/Hyper/.hyper.js{,-$current_time}
+    mv /mnt/c/Users/$usuario_windows/AppData/Roaming/Hyper/.hyper.js{,-$current_time}
     echo "$hyper_config" > /mnt/c/Users/$usuario/AppData/Roaming/Hyper/.hyper.js
     echo -e "Configurações do hyper ajustadas: ${cor_verde}OK${reset}"
 }
