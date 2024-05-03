@@ -13,12 +13,13 @@ fi
 echo -e "\n${cor_verde}Script desenvolvido por Emanuel Cascais${reset}"
 
 bashrc_config() {
-    bashrc_content=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/bashrc_content);
-    mv ~/.bashrc{,-$current_time};
+    bashrc_content=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/bashrc_content)
+    mv ~/.bashrc{,-$current_time}
+    ls -l ~
     echo "$bashrc_content" > ~/.bashrc
     sed -i "s#usuario#$usuario#g" ~/.bashrc
     source ~/.bashrc
-    echo -e "Arquivo .bashrc configurado: ${cor_verde}OK${reset}";
+    echo -e "Arquivo .bashrc configurado: ${cor_verde}OK${reset}"
     
 }
 
