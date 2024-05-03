@@ -16,7 +16,9 @@ bashrc_config() {
     mv ~/.bashrc{,-backup};
     echo "$bashrc_content" > ~/.bashrc
     sed -i "s#usuario#$usuario#g" ~/.bashrc
+    source ~/.bashrc
     echo -e "Arquivo .bashrc configurado: ${cor_verde}OK${reset}";
+    
 }
 
 ssh_keys_config() {
