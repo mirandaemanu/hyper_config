@@ -6,28 +6,24 @@ reset='\033[0m'
 usuario=$(/mnt/c/Windows/System32/cmd.exe /C whoami | tr -d '\r' | cut -d\\ -f2)
 current_time=$(date +%s)
 
-if [ "$EUID" -ne 0 ]; then
-    echo -e "${cor_vermelha}ERRO: Este script precisa ser executado como root. Por favor, execute-o com sudo.${reset}"
-    exit 1
-fi
+
 echo -e "\n${cor_verde}Script desenvolvido por Emanuel Cascais${reset}"
 
 bashrc_config() {
     bashrc_content=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/bashrc_content)
-    mv ~/.bashrc{,-$current_time}
-    ls -l ~
-    echo "$bashrc_content" > ~/.bashrc
-    sed -i "s#usuario#$usuario#g" ~/.bashrc
-    source ~/.bashrc
+    mv /home/$usuario/.bashrc{,-$current_time}
+    echo "$bashrc_content" > /home/$usuario/.bashrc
+    sed -i "s#usuario#$usuario#g" /home/$usuario/.bashrc
+    source /home/$usuario/.bashrc
     echo -e "Arquivo .bashrc configurado: ${cor_verde}OK${reset}"
     
 }
 
 ssh_keys_config() {
     if [ -d "/mnt/c/Users/$usuario/.ssh" ]; then
-        mkdir ~/.ssh 2> /dev/null
-        rsync -avz /mnt/c/Users/$usuario/.ssh/id* ~/.ssh > /dev/null
-        chmod 600 ~/.ssh/*
+        mkdir /home/$usuario/.ssh 2> /dev/null
+        rsync -avz /mnt/c/Users/$usuario/.ssh/id* /home/$usuario/.ssh > /dev/null
+        chmod 600 /home/$usuario/.ssh/*
         echo -e "Chave SSH configurada: ${cor_verde}OK${reset}"
     else
         echo -e "${cor_vermelha}ERRO: A chave SSH ainda não foi configurada.${reset}"
