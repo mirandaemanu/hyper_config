@@ -39,6 +39,7 @@ fix_jump_connection() {
     jump="jump1.pro1.eigbox.com"
     echo -e "\nTestando a conexão com o JUMP.."
     if  ! ping -c 4 "$jump" > /dev/null 2>&1  ; then
+        if grep -cq eigbox /etc/hosts; then continue; fi
         chattr -i /etc/hosts
         sed -i "/# generateHosts = false/a 10.25.73.241   jump1.pro1.eigbox.com\n10.25.73.242   jump2.pro1.eigbox.com" /etc/hosts 2> /dev/null
         chattr +i /etc/hosts
