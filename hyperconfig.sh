@@ -49,7 +49,7 @@ set_hyper_config() {
         exit 1
     fi
     hyper_config=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyper_config)
-    echo "$hyper_config" > /mnt/c/Users/$usuario/AppData/Roaming/Hyper/.hyper
+    echo "$hyper_config" > /mnt/c/Users/$usuario/AppData/Roaming/Hyper/.hyper.js
     echo -e "Configurações do hyper ajustadas: ${cor_verde}OK${reset}"
 }
 
