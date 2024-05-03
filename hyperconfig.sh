@@ -4,6 +4,7 @@ cor_vermelha='\033[0;31m'
 cor_verde='\033[0;32m'
 reset='\033[0m'
 usuario=$(/mnt/c/Windows/System32/cmd.exe /C whoami | tr -d '\r' | cut -d\\ -f2)
+current_time=$(date +%s)
 
 if [ "$EUID" -ne 0 ]; then
     echo -e "${cor_vermelha}ERRO: Este script precisa ser executado como root. Por favor, execute-o com sudo.${reset}"
@@ -13,7 +14,7 @@ echo -e "\n${cor_verde}Script desenvolvido por Emanuel Cascais${reset}\n"
 
 bashrc_config() {
     bashrc_content=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/bashrc_content);
-    mv ~/.bashrc{,-backup};
+    mv ~/.bashrc{,-$current_time};
     echo "$bashrc_content" > ~/.bashrc
     sed -i "s#usuario#$usuario#g" ~/.bashrc
     source ~/.bashrc
@@ -51,7 +52,7 @@ set_hyper_config() {
         exit 1
     fi
     hyper_config=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyper_config)
-    rm -f /mnt/c/Users/$usuario/AppData/Roaming/Hyper/.hyper.js
+    mv /mnt/c/Users/$usuario/AppData/Roaming/Hyper/.hyper.js{,-$current_time}
     echo "$hyper_config" > /mnt/c/Users/$usuario/AppData/Roaming/Hyper/.hyper.js
     echo -e "Configurações do hyper ajustadas: ${cor_verde}OK${reset}"
 }
