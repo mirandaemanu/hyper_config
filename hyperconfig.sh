@@ -9,7 +9,7 @@ if [ "$EUID" -ne 0 ]; then
     echo -e "${cor_vermelha}ERRO: Este script precisa ser executado como root. Por favor, execute-o com sudo.${reset}"
     exit 1
 fi
-echo -e "Script desenvolvido por Emanuel Cascais\n"
+echo -e "\n${cor_verde}Script desenvolvido por Emanuel Cascais\n"
 
 bashrc_config() {
     bashrc_content=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/bashrc_content);
@@ -44,6 +44,10 @@ fix_jump_connection() {
 }
 
 set_hyper_config() {
+    if [ ! -d /mnt/c/Users/$usuario/AppData/Roaming/Hyper ]; then
+        echo -e "${cor_vermelha}ERRO:${reset} o Hyper ainda não foi instalado. Para baixar, acesse o link:\n${cor_verde}https://hyper.is/#installation${reset}"
+        exit 1
+    fi
     hyper_config=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyper_config)
     echo "$hyper_config" > /mnt/c/Users/$usuario/AppData/Roaming/Hyper/.hyper
     echo -e "Configurações do hyper ajustadas: ${cor_verde}OK${reset}"
