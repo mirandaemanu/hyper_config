@@ -28,7 +28,7 @@ echo -e "Script desenvolvido por Emanuel Cascais${reset}\n"
 bashrc_config() {
     bashrc_content=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/bashrc_content)
     bashrc_path="/home/$usuario"
-    if [ ! $usuario || $usuario -eq 'root' ]; then bashrc_path="/root"; fi
+    if [ -z "$usuario" ] || [ "$usuario" -eq 'root' ]; then bashrc_path="/root"; fi
     mv $bashrc_path/.bashrc{,-$current_time}
     echo "$bashrc_content" > $bashrc_path/.bashrc
     sed -i "s#usuario#$usuario_windows#g" $bashrc_path/.bashrc
@@ -44,7 +44,7 @@ ssh_keys_config() {
     fi
     if [ -d "/mnt/c/Users/$usuario_windows/.ssh" ]; then
         ssh_keys_path="/home/$usuario"
-        [ ! $usuario || $usuario -eq 'root' ] && ssh_keys_path="/root" 
+        [ -z "$usuario" ] || [ "$usuario" -eq 'root' ] && ssh_keys_path="/root" 
         mkdir $ssh_keys_path/.ssh 2> /dev/null
         rsync -avz /mnt/c/Users/$usuario_windows/.ssh/id* $ssh_keys_path/.ssh > /dev/null
         chmod 600 $ssh_keys_path/.ssh/*
