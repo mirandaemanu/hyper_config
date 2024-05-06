@@ -4,7 +4,7 @@ cor_vermelha='\033[0;31m'
 cor_verde='\033[0;32m'
 reset='\033[0m'
 usuario=$(echo $SUDO_USER)
-usuario_windows=$(/mnt/c/Windows/System32/cmd.exe /C whoami | tr -d '\r' | cut -d\\ -f2)
+usuario_windows=$(/mnt/c/Windows/System32/cmd.exe /C whoami | tr -d '\r' | cut -d\\ -f2) 2> /dev/null
 current_time=$(date +%s)
 
 if [ $EUID -ne 0 ]; then
