@@ -66,7 +66,7 @@ fix_jump_connection() {
 }
 
 set_hyper_config() {
-    if [ ! -d /mnt/c/Users/$usuario_windows/AppDta/Roaming/Hyper ]; then
+    if [ ! -d /mnt/c/Users/$usuario_windows/AppData/Roaming/Hyper ]; then
         echo -e "\n\n${cor_vermelha}ERRO:${reset} o Hyper não foi encontrado. Para baixar, acesse o link:\n${cor_verde}https://hyper.is/#installation${reset}\n\n${cor_verde}COMO CORRIGIR:${reset} Se a instalação já foi realizada, acesse o link a seguir e copie todo o conteúdo.\nEm seguida abra o Hyper e pressione CTRL + ',' para acessar as configurações. Substitua toda a configuração existente pelo conteúdo copiado do link:\n${cor_verde}https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyper_config${reset}"
         echo -e "\nApós substituir a configuração, o Hyper estará configurado. Para acessar, basta abri-lo e executar um dos comandos abaixo:\neig1\neig2"
         exit 1
