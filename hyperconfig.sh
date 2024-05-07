@@ -31,8 +31,8 @@ generate_new_keys() {
     if [ -z "$usuario" ]  || [ $usuario == 'root' ]; then ssh_keys_path="/root"; fi
     mkdir $ssh_keys_path/.ssh 2> /dev/null
     if ls $ssh_keys_path/.ssh | grep -cq "id_rsa"; then
-        mkdir $ssh_keys_path/.ssh/bkp 2> /dev/null
-        mv $ssh_keys_path/.ssh/id_rsa* $ssh_keys_path/.ssh/bkp 2> /dev/null
+        mkdir $ssh_keys_path/.ssh/bkp-$current_time 2> /dev/null
+        mv $ssh_keys_path/.ssh/id_rsa* $ssh_keys_path/.ssh/bkp-$current_time 2> /dev/null
     fi
     if [ ! $usuario == 'root' ]; then
         su -c "ssh-keygen -b 4096 -t rsa -f $ssh_keys_path/.ssh/id_rsa -q -N ''" $usuario
