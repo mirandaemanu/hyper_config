@@ -7,12 +7,12 @@ usuario=$(echo $SUDO_USER)
 usuario_windows=$(/mnt/c/Windows/System32/cmd.exe /C whoami 2> /dev/null | tr -d '\r' | cut -d\\ -f2 2> /dev/null) 
 current_time=$(date +%s)
 generated_new_keys=false
+parametro=$1
 
 if [ $EUID -ne 0 ]; then
     echo -e "${cor_vermelha}ERRO:${reset} O script deve ser executado com o usuário root. \nPor gentileza, execute novamente utilizando o comando sudo."
     exit 1
 fi
-
 
 echo -e "${cor_verde}
 ╔╗─╔╗────────────╔═══╗─────╔═╗───────────╔╗───────
@@ -25,19 +25,23 @@ echo -e "${cor_verde}
 ────╚══╝╚╝────────────────────╚══╝────────────────"
 echo -e "Script desenvolvido por Emanuel Cascais${reset}\n"
 
-
 generate_new_keys() {
     generated_new_keys=true
     ssh_keys_path="/home/$usuario"
-    if [ -z "$usuario" ]  || [ $usuario == 'root' ]; then
-        ssh_keys_path="/root" && ssh-keygen -b 4096 -t rsa -f $ssh_keys_path/.ssh/id_rsa -q -N ""
+    if [ -z "$usuario" ]  || [ $usuario == 'root' ]; then ssh_keys_path="/root"; fi
+    mkdir $ssh_keys_path/.ssh 2> /dev/null
+    if ls $ssh_keys_path/.ssh | grep -cq "id_rsa"; then
+        mkdir $ssh_keys_path/.ssh/bkp 2> /dev/null
+        mv $ssh_keys_path/.ssh/id_rsa* $ssh_keys_path/.ssh/bkp 2> /dev/null
     fi
     if [ ! $usuario == 'root' ]; then
         su -c "ssh-keygen -b 4096 -t rsa -f $ssh_keys_path/.ssh/id_rsa -q -N ''" $usuario
         sed -i "s#root#$usuario#g" $ssh_keys_path/.ssh/id_rsa 
         sed -i "s#root#$usuario#g" $ssh_keys_path/.ssh/id_rsa.pub
         chown $usuario:$usuario $ssh_keys_path/.ssh/id_*
+        return
     fi
+     ssh-keygen -b 4096 -t rsa -f $ssh_keys_path/.ssh/id_rsa -q -N ""
 }
 
 bashrc_config() {
@@ -54,7 +58,18 @@ bashrc_config() {
 }
 
 ssh_keys_config() {
-    if ! ls "/mnt/c/Users/$usuario_windows/.ssh" | grep -cq id_rsa 2> /dev/null && ! ls "/home/$usuario/.ssh" | grep -cq id_rsa 2> /dev/null ; then
+
+    if [ "$parametro" == "new_key" ]; then
+        generate_new_keys
+        echo -e "Chave SSH configurada: ${cor_verde}OK${reset}"
+        return
+    fi
+
+    ssh_keys_path="/home/$usuario"
+    [ -z "$usuario" ] && ssh_keys_path="/root" 
+    [ "$usuario" == 'root' ] && ssh_keys_path="/root" 
+
+    if ! ls "/mnt/c/Users/$usuario_windows/.ssh" | grep -cq id_rsa 2> /dev/null && ! ls "$ssh_keys_path/.ssh" | grep -cq id_rsa 2> /dev/null ; then
         echo -e "${cor_vermelha}ERRO:${reset} Chave SSH não encontrada."
         read -p "Deseja gerar uma nova chave?(s/n) " resposta
         resposta=$(echo $resposta | tr '[:upper:]' '[:lower:]')
@@ -65,9 +80,6 @@ ssh_keys_config() {
         fi 
     fi
     if ls "/mnt/c/Users/$usuario_windows/.ssh" | grep -cq 'id_rsa' 2> /dev/null ; then
-        ssh_keys_path="/home/$usuario"
-        [ -z "$usuario" ] && ssh_keys_path="/root" 
-        [ "$usuario" == 'root' ] && ssh_keys_path="/root" 
         mkdir $ssh_keys_path/.ssh 2> /dev/null
         rsync -avz /mnt/c/Users/$usuario_windows/.ssh/id* $ssh_keys_path/.ssh > /dev/null
         chmod 600 $ssh_keys_path/.ssh/*
