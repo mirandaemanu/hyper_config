@@ -6,6 +6,7 @@ reset='\033[0m'
 usuario=$(echo $SUDO_USER)
 usuario_windows=$(/mnt/c/Windows/System32/cmd.exe /C whoami 2> /dev/null | tr -d '\r' | cut -d\\ -f2 2> /dev/null) 
 current_time=$(date +%s)
+generated_new_keys=false
 
 if [ $EUID -ne 0 ]; then
     echo -e "${cor_vermelha}ERRO:${reset} O script deve ser executado com o usuário root. \nPor gentileza, execute novamente utilizando o comando sudo."
@@ -25,6 +26,20 @@ echo -e "${cor_verde}
 echo -e "Script desenvolvido por Emanuel Cascais${reset}\n"
 
 
+generate_new_keys() {
+    generated_new_keys=true
+    ssh_keys_path="/home/$usuario"
+    if [ -z "$usuario" ]  || [ $usuario == 'root' ]; then
+        ssh_keys_path="/root" && ssh-keygen -b 4096 -t rsa -f $ssh_keys_path/.ssh/id_rsa -q -N ""
+    fi
+    if [ ! $usuario == 'root' ]; then
+        su -c "ssh-keygen -b 4096 -t rsa -f $ssh_keys_path/.ssh/id_rsa -q -N ''" $usuario
+        sed -i "s#root#$usuario#g" $ssh_keys_path/.ssh/id_rsa 
+        sed -i "s#root#$usuario#g" $ssh_keys_path/.ssh/id_rsa.pub
+        chown $usuario:$usuario $ssh_keys_path/.ssh/id_*
+    fi
+}
+
 bashrc_config() {
     bashrc_content=$(curl -s https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/bashrc_content)
     bashrc_path="/home/$usuario"
@@ -39,11 +54,17 @@ bashrc_config() {
 }
 
 ssh_keys_config() {
-    if [ ! -d "/mnt/c/Users/$usuario_windows/.ssh" ] && [ ! -d "/home/$usuario/.ssh"  ]; then
-        echo -e "${cor_vermelha}ERRO:${reset} Chave SSH não encontrada. \nPara corrigir, gere uma chave SSH e configure no IPA conforme a documentação:"
-        exit 1
+    if ! ls "/mnt/c/Users/$usuario_windows/.ssh" | grep -cq id_rsa 2> /dev/null && ! ls "/home/$usuario/.ssh" | grep -cq id_rsa 2> /dev/null ; then
+        echo -e "${cor_vermelha}ERRO:${reset} Chave SSH não encontrada."
+        read -p "Deseja gerar uma nova chave?(s/n) " resposta
+        resposta=$(echo $resposta | tr '[:upper:]' '[:lower:]')
+        if [ "$resposta" == "s" ] || [ "$resposta" == "sim" ]; then
+            generate_new_keys
+        else
+            exit 1
+        fi 
     fi
-    if [ -d "/mnt/c/Users/$usuario_windows/.ssh" ]; then
+    if ls "/mnt/c/Users/$usuario_windows/.ssh" | grep -cq 'id_rsa' 2> /dev/null ; then
         ssh_keys_path="/home/$usuario"
         [ -z "$usuario" ] && ssh_keys_path="/root" 
         [ "$usuario" == 'root' ] && ssh_keys_path="/root" 
@@ -81,9 +102,25 @@ set_hyper_config() {
 }
 
 done_message() {
-    echo -e "\n${cor_verde}O Hyper foi configurado com sucesso!${reset}\nPara acessar, basta abrir o hyper e executar um dos comandos a seguir:\neig1\neig2${reset}"
+
+    echo -e "\n${cor_verde}O Hyper foi configurado com sucesso!${reset}\n"
+    if $generated_new_keys; then
+        ssh_keys_path="/home/$usuario"
+        [ -z "$usuario" ] && ssh_keys_path="/root" 
+        echo -e "Para que consiga acessar, será necessário apenas subir a nova chave no IPA:\n"
+        echo -e "1 - Copie o conteúdo da sua chave SSH abaixo:\n"
+        cat $ssh_keys_path/.ssh/id_rsa.pub
+        echo -e "\n2- Acesse o IPA:\nhttps://ipa.eigbox.com/ipa/ui/"
+        echo -e "\n3 - Se necessário, siga as duas primeiras etapas da documentação: ${cor_verde}Alterando a senha tempororária${reset} e ${cor_verde}Gerando a Chave SSH\nLINK DA DOCUMENTAÇÃO:${reset} https://confluence.newfold.com/display/HGBZK/%5BJump%5DNovo+eigSH"
+        echo -e "\n${cor_verde}ATENÇÃO:${reset} Como a chave já foi gerada, não será necessário gerar uma nova chave SSH conforme consta na documentação. Apenas resete a senha do IPA, caso seja seu primeiro acesso, entre na plataforma e configure a chave fornecida anteriormente.\n"
+        else
+        echo -e "Para acessar, basta abrir o hyper e executar um dos comandos a seguir:\neig1\neig2"
+    fi
+    
 
 }
+
+
 
 fix_jump_connection
 bashrc_config
