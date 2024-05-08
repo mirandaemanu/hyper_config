@@ -35,6 +35,8 @@ generate_new_keys() {
         mv $ssh_keys_path/.ssh/id_rsa* $ssh_keys_path/.ssh/bkp-$current_time 2> /dev/null
     fi
     if [ ! $usuario == 'root' ]; then
+        if [ -d $ssh_keys_path/.ssh ]; then mkdir $ssh_keys_path/.ssh; fi
+        chown $usuario:$usuario $ssh_keys_path/.ssh
         su -c "ssh-keygen -b 4096 -t rsa -f $ssh_keys_path/.ssh/id_rsa -q -N ''" $usuario
         sed -i "s#root#$usuario#g" $ssh_keys_path/.ssh/id_rsa 
         sed -i "s#root#$usuario#g" $ssh_keys_path/.ssh/id_rsa.pub
