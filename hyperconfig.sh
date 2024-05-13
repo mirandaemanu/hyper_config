@@ -94,11 +94,11 @@ ssh_keys_config() {
 fix_jump_connection() {
     jump="jump1.pro1.eigbox.com"
     echo -e "Testando a conexão com o JUMP.."
+    chattr -i /etc/hosts
     if ! ping -c 4 "$jump" > /dev/null 2>&1 && ! grep -cq "eigbox" /etc/hosts; then
-        chattr -i /etc/hosts
         sed -i "/# generateHosts = false/a 10.25.73.241   jump1.pro1.eigbox.com\n10.25.73.242   jump2.pro1.eigbox.com" /etc/hosts 2> /dev/null
-        chattr +i /etc/hosts
     fi
+    chattr +i /etc/hosts
     echo -e "${cor_verde}Conexão bem sucedida ${reset}"
 }
 
@@ -120,7 +120,7 @@ done_message() {
     echo -e "\n${cor_verde}O Hyper foi configurado com sucesso!${reset}\n"
     if $generated_new_keys; then
         ssh_keys_path="/home/$usuario"
-        [ -z "$usuario" ] && ssh_keys_path="/root" 
+        [ -z "$usuario" ] || [ "$usuario" == "root" ]&& ssh_keys_path="/root" 
         echo -e "Para que consiga acessar, será necessário apenas subir a nova chave no IPA:\n"
         echo -e "1 - Copie o conteúdo da sua chave SSH abaixo:\n"
         cat $ssh_keys_path/.ssh/id_rsa.pub
