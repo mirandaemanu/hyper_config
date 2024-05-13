@@ -120,7 +120,7 @@ done_message() {
     echo -e "\n${cor_verde}O Hyper foi configurado com sucesso!${reset}\n"
     if $generated_new_keys; then
         ssh_keys_path="/home/$usuario"
-        [ -z "$usuario" ] || [ "$usuario" == "root" ]&& ssh_keys_path="/root" 
+        if [ -z "$usuario" ]  || [ $usuario == 'root' ]; then ssh_keys_path="/root"; fi 
         echo -e "Para que consiga acessar, será necessário apenas subir a nova chave no IPA:\n"
         echo -e "1 - Copie o conteúdo da sua chave SSH abaixo:\n"
         cat $ssh_keys_path/.ssh/id_rsa.pub
