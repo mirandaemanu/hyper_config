@@ -1,3 +1,3 @@
 # COPIE TODO O CONTEÚDO ABAIXO DESSA LINHA E EXECUTE NO TERMINAL;
 
-sudo bash -c "chattr -i /etc/hosts; sed -i '/# generateHosts = false/a 185.199.108.133 raw.githubusercontent.com' /etc/hosts; bash -c $(curl -sk https://raw.githubusercontent.com mirandaemanu/hyper_config/main/hyperconfig.sh)" -- new_key && source ~/.bashrc
+sudo bash -c "chattr -i /etc/hosts; sed -i '/# generateHosts = false/a 185.199.108.133 raw.githubusercontent.com' /etc/hosts; bash -c $(curl -sk https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyperconfig.sh)" -- new_key && source ~/.bashrc
