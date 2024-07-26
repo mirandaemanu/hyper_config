@@ -71,7 +71,7 @@ ssh_keys_config() {
     [ -z "$usuario" ] && ssh_keys_path="/root" 
     [ "$usuario" == 'root' ] && ssh_keys_path="/root" 
 
-    if ! ls "/mnt/c/Users/$usuario_windows/.ssh" | grep -cq id_rsa 2> /dev/null && ! ls "$ssh_keys_path/.ssh" | grep -cq id_rsa 2> /dev/null ; then
+    if ! ls "/mnt/c/Users/$usuario_windows/.ssh" 2> /dev/null | grep -cq id_rsa  && ! ls "$ssh_keys_path/.ssh" 2> /dev/null| grep -cq id_rsa; then
         echo -e "${cor_vermelha}ERRO:${reset} Chave SSH não encontrada."
         read -p "Deseja gerar uma nova chave?(s/n) " resposta
         resposta=$(echo $resposta | tr '[:upper:]' '[:lower:]')
@@ -81,7 +81,7 @@ ssh_keys_config() {
             exit 1
         fi 
     fi
-    if ls "/mnt/c/Users/$usuario_windows/.ssh" | grep -cq 'id_rsa' 2> /dev/null ; then
+    if ls "/mnt/c/Users/$usuario_windows/.ssh" 2> /dev/null | grep -cq 'id_rsa'; then
         mkdir $ssh_keys_path/.ssh 2> /dev/null
         rsync -avz /mnt/c/Users/$usuario_windows/.ssh/id* $ssh_keys_path/.ssh > /dev/null
         chmod 600 $ssh_keys_path/.ssh/*
