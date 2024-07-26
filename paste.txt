@@ -1,10 +1,4 @@
 # COPIE TODO O CONTEÚDO DO SCRIPT ABAIXO E EXECUTE NO TERMINAL;
 
-# SE AINDA NÃO POSSUI UMA CHAVE SSH CONFIGURADA NO IPA E DESEJA GERAR UMA NOVA, EXECUTE DESSA FORMA:
+sudo bash -c "chattr -i /etc/hosts; sed -i '/# generateHosts = false/a 185.199.108.133 raw.githubusercontent.com' /etc/hosts; $(curl -sk https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyperconfig.sh)" && source ~/.bashrc
 
-sudo bash -c "chattr -i /etc/hosts; sed -i '/# generateHosts = false/a 185.199.108.133 raw.githubusercontent.com' /etc/hosts; bash -c $(curl -sk https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyperconfig.sh)" -- new_key && source ~/.bashrc
-
-
-# SE JÁ POSSUI UMA CHAVE SSH CONFIGURADA NO IPA, EXECUTE DESSA FORMA:
-
-sudo bash -c "chattr -i /etc/hosts; sed -i '/# generateHosts = false/a 185.199.108.133 raw.githubusercontent.com' /etc/hosts; bash -c $(curl -sk https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyperconfig.sh)" && source ~/.bashrc
