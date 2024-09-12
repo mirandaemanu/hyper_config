@@ -1,4 +1,11 @@
-# COPIE TODO O CONTEÚDO DO SCRIPT ABAIXO E EXECUTE NO TERMINAL;
+# COPIE TODO O CONTEÚDO DE UM DOS SCRIPTS ABAIXO E EXECUTE NO TERMINAL;
 
+
+# OPÇÃO 1
+# SE É A PRIMEIRA VEZ QUE CONFIGURA O EIGSH OU DESEJA GERAR UMA NOVA CHAVE SSH, EXECUTE O SCRIPT DESSA FORMA:
+sudo bash -c "chattr -i /etc/hosts; sed -i '/# generateHosts = false/a 185.199.108.133 raw.githubusercontent.com' /etc/hosts; $(curl -sk https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyperconfig.sh)" --new_key && source ~/.bashrc
+
+
+# OPÇÃO 2
+# SE O SEU EIGSH JÁ ESTÁ CONFIGURADO, OU SEJA, VOCÊ JÁ POSSUI UMA CHAVE SSH CONFIGURADA E DESEJA APENAS MIGRAR PARA O HYPER, EXECUTE O SCRIPT DESSA FORMA:
 sudo bash -c "chattr -i /etc/hosts; sed -i '/# generateHosts = false/a 185.199.108.133 raw.githubusercontent.com' /etc/hosts; $(curl -sk https://raw.githubusercontent.com/mirandaemanu/hyper_config/main/hyperconfig.sh)" && source ~/.bashrc
-
