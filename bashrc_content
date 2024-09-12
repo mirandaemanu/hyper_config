@@ -14,6 +14,9 @@ case $- in
 esac
 alias eig1='eval $(ssh-agent); ssh-add ~/.ssh/id_rsa; ssh -o ServerAliveInterval=30 -t -A usuario@jump1.pro1.eigbox.com'
 alias eig2='eval $(ssh-agent); ssh-add ~/.ssh/id_rsa; ssh -o ServerAliveInterval=30 -t -A usuario@jump2.pro1.eigbox.com'
+alias eig3='eval $(ssh-agent); ssh-add ~/.ssh/id_rsa; ssh -o ServerAliveInterval=30 -t -A usuario@jump1-atl1.eigbox.com'
+alias eig4='eval $(ssh-agent); ssh-add ~/.ssh/id_rsa; ssh -o ServerAliveInterval=30 -t -A usuario@jump2-atl1.eigbox.com'
+alias eig5='eval $(ssh-agent); ssh-add ~/.ssh/id_rsa; ssh -o ServerAliveInterval=30 -t -A usuario@jump1.infra.pro1.eigbox.com'
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
