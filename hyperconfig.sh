@@ -96,7 +96,7 @@ fix_jump_connection() {
     echo -e "Testando a conexão com o JUMP.."
     chattr -i /etc/hosts
     if ! ping -c 4 "$jump" > /dev/null 2>&1 && ! grep -cq "eigbox" /etc/hosts; then
-        sed -i "/# generateHosts = false/a 10.25.73.241   jump1.pro1.eigbox.com\n10.25.73.242   jump2.pro1.eigbox.com" /etc/hosts 2> /dev/null
+        sed -i "/# generateHosts = false/a 10.25.73.241   jump1.pro1.eigbox.com\n10.25.73.242   jump2.pro1.eigbox.com\n10.29.88.241   jump1-atl1.eigbox.com\n10.29.90.242   jump2-atl1.eigbox.com\n10.25.73.241   jump1.infra.pro1.eigbox.com" /etc/hosts 2> /dev/null
     fi
     chattr +i /etc/hosts
     echo -e "${cor_verde}Conexão bem sucedida ${reset}"
