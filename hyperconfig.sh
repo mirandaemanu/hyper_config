@@ -92,7 +92,7 @@ ssh_keys_config() {
 }
 
 fix_jump_connection() {
-    jump="jump1.pro1.eigbox.com"
+    jump="jump1-atl1.eigbox.com"
     echo -e "Testando a conexão com o JUMP.."
     chattr -i /etc/hosts
     if ! ping -c 4 "$jump" > /dev/null 2>&1 && ! grep -cq "eigbox" /etc/hosts; then
